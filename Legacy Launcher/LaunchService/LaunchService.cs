@@ -15,6 +15,7 @@ namespace Legacy_Launcher.LaunchService
     {
         public static Process FNLauncherProcess;
         public static Process FNAntiCheatProcess;
+        public static Process FNEACProcess;
         public static Process FortniteGame;
 
         public static void InitializeLaunching(string ExchangeCode, string GamePath, float GameVer)
@@ -27,10 +28,11 @@ namespace Legacy_Launcher.LaunchService
             Utils.Logger.good("Started launching the game client!");
             if (/*GameVer*/ true)
             {
-                LaunchGame(ExchangeCode, GamePath, "-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -noeac -fromfl=be -fltoken=h1cdhchd10150221h130eB56 -skippatchcheck");
+                LaunchGame(ExchangeCode, GamePath, "-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -nobe -fromfl=be -fltoken=h1cdhchd10150221h130eB56 -skippatchcheck");
             } // ripped the launch args from eonv1 for now
             FakeAC.Start(GamePath, "FortniteClient-Win64-Shipping_BE.exe", $"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -noeac -fromfl=be -fltoken=h1cdhchd10150221h130eB56 -skippatchcheck");
             FakeAC.Start(GamePath, "FortniteLauncher.exe", $"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -noeac -fromfl=be -fltoken=h1cdhchd10150221h130eB56 -skippatchcheck");
+            FakeAC.Start(GamePath, "FortniteClient-Win64-Shipping_EAC.exe", $"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -noeac -fromfl=be -fltoken=h1cdhchd10150221h130eB56 -skippatchcheck");
             LaunchService.FortniteGame.WaitForExit();
             try
             {
@@ -71,6 +73,7 @@ namespace Legacy_Launcher.LaunchService
             }
             LaunchService.FNLauncherProcess?.Kill();
             LaunchService.FNAntiCheatProcess?.Kill();
+            LaunchService.FNEACProcess?.Kill();
         }
     }
 
@@ -125,6 +128,18 @@ namespace Legacy_Launcher.LaunchService
                             Utils.Logger.good("Started BattleEye Process!");
                         }
                         LaunchService.FNAntiCheatProcess.Freeze();
+                    } else if (FileName == "FortniteClient-Win64-Shipping_EAC.exe")
+                    {
+                        LaunchService.FNEACProcess = Process.Start(ProcessIG);
+                        if (LaunchService.FNEACProcess.Id == 0)
+                        {
+                            Utils.Logger.error("Failed To Start EAC Process!");
+                        }
+                        else
+                        {
+                            Utils.Logger.good("Started EAC Process!");
+                        }
+                        LaunchService.FNEACProcess.Freeze();
                     }
                     else
                     {

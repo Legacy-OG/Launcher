@@ -64,6 +64,8 @@ namespace Legacy_Launcher
                 } else
                 {
                     Utils.Logger.error("Could not get access token!");
+                    Console.ReadKey();
+                    Environment.Exit(1);
                 }
 
                 Utils.Logger.good($"Successfully logged into {json["displayName"].ToString()}");
@@ -87,6 +89,8 @@ namespace Legacy_Launcher
                 } else
                 {
                     Utils.Logger.error("Failed to get exchange code!");
+                    Console.ReadKey();
+                    Environment.Exit(1);
                 }
             }
         }

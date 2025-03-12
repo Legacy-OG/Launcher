@@ -25,7 +25,7 @@ namespace Legacy_Launcher
             Console.WriteLine();
             Utils.Logger.good("You will be redirected to the Epic Games website to login. After logging in please get the \"authorizationCode\".");
             Thread.Sleep(2000);
-            Process.Start(new ProcessStartInfo("https://www.epicgames.com/id/logout?redirectUrl=https%3A//www.epicgames.com/id/login%3FredirectUrl%3Dhttps%253A%252F%252Fwww.epicgames.com%252Fid%252Fapi%252Fredirect%253FclientId%253Dec684b8c687f479fadea3cb2ad83f5c6%2526responseType%253Dcode") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://www.epicgames.com/id/api/redirect?clientId=ec684b8c687f479fadea3cb2ad83f5c6&responseType=code") { UseShellExecute = true });
         }
 
         static async Task Main(string[] args)

@@ -16,6 +16,7 @@ namespace Legacy_Launcher.LaunchService
         public static Process FNLauncherProcess;
         public static Process FNAntiCheatProcess;
         public static Process FNEACProcess;
+        public static Process FNEOSEACProcess;
         public static Process FortniteGame;
 
         public static void InitializeLaunching(string ExchangeCode, string GamePath, float GameVer)
@@ -33,6 +34,13 @@ namespace Legacy_Launcher.LaunchService
             FakeAC.Start(GamePath, "FortniteClient-Win64-Shipping_BE.exe", $"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -noeac -fromfl=be -fltoken=h1cdhchd10150221h130eB56 -skippatchcheck");
             FakeAC.Start(GamePath, "FortniteLauncher.exe", $"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -noeac -fromfl=be -fltoken=h1cdhchd10150221h130eB56 -skippatchcheck");
             FakeAC.Start(GamePath, "FortniteClient-Win64-Shipping_EAC.exe", $"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -noeac -fromfl=be -fltoken=h1cdhchd10150221h130eB56 -skippatchcheck");
+            try
+            {
+                LaunchEAC(ExchangeCode, GamePath, "-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -nobe -fromfl=eac -fltoken=3db3ba5dcbd2e16703f3978d -skippatchcheck -caldera=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiYmU5ZGE1YzJmYmVhNDQwN2IyZjQwZWJhYWQ4NTlhZDQiLCJnZW5lcmF0ZWQiOjE2Mzg3MTcyNzgsImNhbGRlcmFHdWlkIjoiMzgxMGI4NjMtMmE2NS00NDU3LTliNTgtNGRhYjNiNDgyYTg2IiwiYWNQcm92aWRlciI6IkVhc3lBbnRpQ2hlYXQiLCJub3RlcyI6IiIsImZhbGxiYWNrIjpmYWxzZX0.VAWQB67RTxhiWOxx7DBjnzDnXyyEnX7OljJm-j2d88G_WgwQ9wrE6lwMEHZHjBd1ISJdUO1UVUqkfLdU5nofBQ");
+            } catch
+            {
+                Utils.Logger.warn("Could not start EOS EasyAntiCheat, This is fine if you are running a older build!");
+            }
             LaunchService.FortniteGame.WaitForExit();
             try
             {
@@ -64,6 +72,24 @@ namespace Legacy_Launcher.LaunchService
             }
         }
 
+        public static void LaunchEAC(string ExchangeCode, string GamePath, string Args) // args will change based on game version
+        {
+            if (File.Exists(Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteClient-Win64-Shipping_EAC_EOS.exe")))
+            {
+                LaunchService.FNEOSEACProcess = new Process()
+                {
+                    StartInfo = new ProcessStartInfo()
+                    {
+                        Arguments = $"-AUTH_LOGIN=unused -AUTH_PASSWORD={ExchangeCode} AUTH_TYPE=exchangecode " + Args,
+                        FileName = Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteClient-Win64-Shipping_EAC_EOS.exe")
+                    },
+                    EnableRaisingEvents = true
+                };
+                LaunchService.FNEOSEACProcess.Start();
+                Utils.Logger.good("Successfully launched the EOS EasyAntiCheat!");
+            }
+        }
+
         public static void OnFortniteExit(object sender, EventArgs e)
         {
             Process fortniteProcess = LaunchService.FortniteGame;
@@ -74,6 +100,7 @@ namespace Legacy_Launcher.LaunchService
             LaunchService.FNLauncherProcess?.Kill();
             LaunchService.FNAntiCheatProcess?.Kill();
             LaunchService.FNEACProcess?.Kill();
+            LaunchService.FNEOSEACProcess?.Kill();
         }
     }
 
@@ -140,6 +167,19 @@ namespace Legacy_Launcher.LaunchService
                             Utils.Logger.good("Started EAC Process!");
                         }
                         LaunchService.FNEACProcess.Freeze();
+                    }
+                    else if (FileName == "FortniteClient-Win64-Shipping_EAC_EOS.exe")
+                    {
+                        LaunchService.FNEOSEACProcess = Process.Start(ProcessIG);
+                        if (LaunchService.FNEACProcess.Id == 0)
+                        {
+                            Utils.Logger.error("Failed To Start EOS EasyAntiCheat Process!");
+                        }
+                        else
+                        {
+                            Utils.Logger.good("Started EOS EasyAntiCheat Process!");
+                        }
+                        LaunchService.FNEOSEACProcess.Freeze();
                     }
                     else
                     {

@@ -211,14 +211,6 @@ namespace Legacy_Launcher
                 if (json.ContainsKey("access_token"))
                 {
                     Properties.Settings.Default.access_token = json["access_token"].ToString();
-                    if (json.ContainsKey("refresh_token"))
-                    {
-                        Properties.Settings.Default.refresh_token = json["refresh_token"].ToString();
-                    }
-                    else
-                    {
-                        Utils.Logger.error("Could not get refresh token, Launching will still proceed but automatic login might not work!");
-                    }
                     Properties.Settings.Default.Save();
                 }
                 else

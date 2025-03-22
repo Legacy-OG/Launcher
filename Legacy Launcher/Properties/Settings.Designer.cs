@@ -58,5 +58,17 @@ namespace Legacy_Launcher.Properties {
                 this["GamePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Season {
+            get {
+                return ((int)(this["Season"]));
+            }
+            set {
+                this["Season"] = value;
+            }
+        }
     }
 }

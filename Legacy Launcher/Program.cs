@@ -57,6 +57,7 @@ namespace Legacy_Launcher
             Console.Write("[1]: Yes | [2]: No: ");
             string choice = Console.ReadLine();
             string GamePath = "";
+            int SeasonNumber = 0;
             if (choice == "1")
             {
                 while (!PathValid)
@@ -66,6 +67,8 @@ namespace Legacy_Launcher
                     if (File.Exists(Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteClient-Win64-Shipping.exe")))
                     {
                         PathValid = true;
+                        Console.Write("Please enter the season number of the build");
+                        SeasonNumber = Convert.ToInt32(Console.ReadLine());
                     }
                     else
                     {
@@ -74,6 +77,7 @@ namespace Legacy_Launcher
                     Console.WriteLine();
                 }
                 Properties.Settings.Default.GamePath = GamePath;
+                Properties.Settings.Default.Season = SeasonNumber;
             }
             else if (choice == "2") 
             {
@@ -87,6 +91,8 @@ namespace Legacy_Launcher
                         if (File.Exists(Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteClient-Win64-Shipping.exe")))
                         {
                             PathValid = true;
+                            Console.Write("Please enter the season number of the build");
+                            SeasonNumber = Convert.ToInt32(Console.ReadLine());
                         }
                         else
                         {
@@ -95,6 +101,7 @@ namespace Legacy_Launcher
                         Console.WriteLine();
                     }
                     Properties.Settings.Default.GamePath = GamePath;
+                    Properties.Settings.Default.Season = SeasonNumber;
                 }
             }
             else
@@ -110,6 +117,8 @@ namespace Legacy_Launcher
                         if (File.Exists(Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteClient-Win64-Shipping.exe")))
                         {
                             PathValid = true;
+                            Console.Write("Please enter the season number of the build");
+                            SeasonNumber = Convert.ToInt32(Console.ReadLine());
                         }
                         else
                         {
@@ -118,6 +127,7 @@ namespace Legacy_Launcher
                         Console.WriteLine();
                     }
                     Properties.Settings.Default.GamePath = GamePath;
+                    Properties.Settings.Default.Season = SeasonNumber;
                 }
             }
 
@@ -225,6 +235,7 @@ namespace Legacy_Launcher
                     string GamePath = await DetermineGamePath();
                     await GetExchangeCode(Properties.Settings.Default.access_token);
                     LaunchService.LaunchService.InitializeLaunching(Program.ExchangeCode, GamePath, 0);
+                    return;
                 }
 
                 Utils.Logger.good($"Successfully logged into {json["displayName"].ToString()}");

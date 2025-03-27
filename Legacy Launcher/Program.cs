@@ -67,7 +67,7 @@ namespace Legacy_Launcher
                     if (File.Exists(Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteClient-Win64-Shipping.exe")))
                     {
                         PathValid = true;
-                        Console.Write("Please enter the season number of the build");
+                        Console.Write("Please enter the season number of the build: ");
                         SeasonNumber = Convert.ToInt32(Console.ReadLine());
                     }
                     else
@@ -91,7 +91,7 @@ namespace Legacy_Launcher
                         if (File.Exists(Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteClient-Win64-Shipping.exe")))
                         {
                             PathValid = true;
-                            Console.Write("Please enter the season number of the build");
+                            Console.Write("Please enter the season number of the build: ");
                             SeasonNumber = Convert.ToInt32(Console.ReadLine());
                         }
                         else
@@ -117,7 +117,7 @@ namespace Legacy_Launcher
                         if (File.Exists(Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteClient-Win64-Shipping.exe")))
                         {
                             PathValid = true;
-                            Console.Write("Please enter the season number of the build");
+                            Console.Write("Please enter the season number of the build: ");
                             SeasonNumber = Convert.ToInt32(Console.ReadLine());
                         }
                         else
@@ -165,6 +165,8 @@ namespace Legacy_Launcher
                     {
                         Utils.Logger.error("Could not get refresh token, Launching will still proceed but automatic login might not work!");
                     }
+                    Properties.Settings.Default.displayName = json["displayName"].ToString();
+                    Properties.Settings.Default.account_id = json["account_id"].ToString();
                     Properties.Settings.Default.Save();
                 } else
                 {
@@ -221,6 +223,8 @@ namespace Legacy_Launcher
                 if (json.ContainsKey("access_token"))
                 {
                     Properties.Settings.Default.access_token = json["access_token"].ToString();
+                    Properties.Settings.Default.displayName = json["displayName"].ToString();
+                    Properties.Settings.Default.account_id = json["account_id"].ToString();
                     Properties.Settings.Default.Save();
                 }
                 else
@@ -235,7 +239,7 @@ namespace Legacy_Launcher
                     string GamePath = await DetermineGamePath();
                     await GetExchangeCode(Properties.Settings.Default.access_token);
                     LaunchService.LaunchService.InitializeLaunching(Program.ExchangeCode, GamePath, 0);
-                    return;
+                    Environment.Exit(0);
                 }
 
                 Utils.Logger.good($"Successfully logged into {json["displayName"].ToString()}");

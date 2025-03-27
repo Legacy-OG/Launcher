@@ -70,5 +70,29 @@ namespace Legacy_Launcher.Properties {
                 this["Season"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string displayName {
+            get {
+                return ((string)(this["displayName"]));
+            }
+            set {
+                this["displayName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string account_id {
+            get {
+                return ((string)(this["account_id"]));
+            }
+            set {
+                this["account_id"] = value;
+            }
+        }
     }
 }

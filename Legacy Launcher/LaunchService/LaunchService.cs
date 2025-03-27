@@ -35,16 +35,17 @@ namespace Legacy_Launcher.LaunchService
             Utils.Logger.good("Started launching the game client!");
             if (Properties.Settings.Default.Season >= 30)
             {
-                LaunchEAC(ExchangeCode, GamePath, $"-obfuscationid=PM3G4r-oF6DIG-fbJUON8rECU73FWA -AUTH_LOGIN=unused -AUTH_PASSWORD={ExchangeCode} AUTH_TYPE=exchangecode -epicapp=Fortnite -epicenv=Prod -EpicPortal -epiclocale=en -epicsandboxid=fn -nobe -noeac -fromfl=eaceos -caldera=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiUG9uZ28iLCJnZW5lcmF0ZWQiOjE3NDI2NzYxNDksImNhbGRlcmFHVUlEIjoiZjUyZGQxZGItYjA0OC00NWFmLTgwMDQtYjc5MWEzMGZhYzYwIiwiYWNQcm92aWRlciI6IkVhc3lBbnRpQ2hlYXRFT1MiLCJub3RlcyI6IiIsInByZSI6ZmFsc2UsImZhbGxiYWNrIjpmYWxzZX0.KX6JMAd_dlxyyuZp6DFQ058LDmVo3qJNFrxyMyEQ70g -fltoken=77b9908d91e7aa96c6bd6814");
+                //LaunchFortniteLauncher(ExchangeCode, GamePath, $"-epicapp=Fortnite -epicenv=Prod -EpicPortal -steamimportavailable -epicusername=\"{Properties.Settings.Default.displayName}\" -epicuserid={Properties.Settings.Default.account_id} -epiclocale=en -epicsandboxid=fn -named_pipe={Properties.Settings.Default.account_id}\\Fortnite");
+                LaunchEAC(ExchangeCode, GamePath, $"-epicapp=Fortnite -epicenv=Prod -EpicPortal -steamimportavailable -epicusername={Properties.Settings.Default.displayName} -epicuserid={Properties.Settings.Default.account_id} -epiclocale=en -epicsandboxid=fn -named_pipe={Properties.Settings.Default.account_id}\\Fortnite -fromfl=eaceos -caldera=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiMzBjMGFkOTcxMDU0NGNkZGIzMTQ3OTBiMjkyZGZkNWYiLCJnZW5lcmF0ZWQiOjE3NDMwMzQ4NjIsImNhbGRlcmFHdWlkIjoiMTFhYWMzZTItNGQ1Zi00ZjEwLWJjZmYtOTE3MTgwNjY0Yzk2IiwiYWNQcm92aWRlciI6IkVhc3lBbnRpQ2hlYXRFT1MiLCJub3RlcyI6IiIsInByZSI6dHJ1ZSwicGFlIjpmYWxzZSwiZmFsbGJhY2siOmZhbHNlfQ.zStgViVqciW5-U6-Lfagy5ViZ4f94pKu7V7OLf6hz_r368tIO4WZVLKo_IsqiA8BVnLViSQPf74UkiKML-4Gbg -startup=2e143277-9987-4091-a5fe-29fe40497e7c");
             }
             else {
                 if (Properties.Settings.Default.Season > 26)
                 {
-                    LaunchGame(ExchangeCode, GamePath, "-epicapp=Fortnite -epicenv=Prod -EpicPortal -epiclocale=en -epicsandboxid=fn -nobe -noeac -fromfl=eaceos -caldera=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiUG9uZ28iLCJnZW5lcmF0ZWQiOjE3NDMwMjc3MTcsImNhbGRlcmFHVUlEIjoiMGExZDg3NWYtMDAyMi00M2Q3LWE4MGYtYTk3YzdhN2UwYmRlIiwiYWNQcm92aWRlciI6IkVhc3lBbnRpQ2hlYXRFT1MiLCJub3RlcyI6IiIsInByZSI6ZmFsc2UsImZhbGxiYWNrIjpmYWxzZX0.NyggNFRNPsAP1bhozve39HhTEosIO6Tt6e9l0d2fHOw -fltoken=77b9908d91e7aa96c6bd6814");
                     FakeAC.Start(GamePath, "FortniteClient-Win64-Shipping_BE.exe", $"-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -noeac -fromfl=be -fltoken=h1cdhchd10150221h130eB56 -skippatchcheck");
                     FakeAC.Start(GamePath, "FortniteLauncher.exe", $"");
                     FakeAC.Start(GamePath, "FortniteClient-Win64-Shipping_EAC.exe", $"");
-                    FakeAC.Start(GamePath, "FortniteClient-Win64-Shipping_EAC_EOS.exe", $"-obfuscationid=PM3G4r-oF6DIG-fbJUON8rECU73FWA -AUTH_LOGIN=unused -AUTH_PASSWORD={ExchangeCode} AUTH_TYPE=exchangecode -epicapp=Fortnite -epicenv=Prod -EpicPortal -epiclocale=en -epicsandboxid=fn -nobe -noeac -fromfl=eaceos -caldera=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiUG9uZ28iLCJnZW5lcmF0ZWQiOjE3NDMwMjc3MTcsImNhbGRlcmFHVUlEIjoiMGExZDg3NWYtMDAyMi00M2Q3LWE4MGYtYTk3YzdhN2UwYmRlIiwiYWNQcm92aWRlciI6IkVhc3lBbnRpQ2hlYXRFT1MiLCJub3RlcyI6IiIsInByZSI6ZmFsc2UsImZhbGxiYWNrIjpmYWxzZX0.NyggNFRNPsAP1bhozve39HhTEosIO6Tt6e9l0d2fHOw -fltoken=77b9908d91e7aa96c6bd6814");
+                    FakeAC.Start(GamePath, "FortniteClient-Win64-Shipping_EAC_EOS.exe", "-obfuscationid=PM3G4r-oF6DIG-fbJUON8rECU73FWA -AUTH_LOGIN=unused -AUTH_PASSWORD={ExchangeCode} AUTH_TYPE=exchangecode -epicapp=Fortnite -epicenv=Prod -EpicPortal -epiclocale=en -epicsandboxid=fn -nobe -noeac -fromfl=eaceos -caldera=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiUG9uZ28iLCJnZW5lcmF0ZWQiOjE3NDI2NzYxNDksImNhbGRlcmFHVUlEIjoiZjUyZGQxZGItYjA0OC00NWFmLTgwMDQtYjc5MWEzMGZhYzYwIiwiYWNQcm92aWRlciI6IkVhc3lBbnRpQ2hlYXRFT1MiLCJub3RlcyI6IiIsInByZSI6ZmFsc2UsImZhbGxiYWNrIjpmYWxzZX0.KX6JMAd_dlxyyuZp6DFQ058LDmVo3qJNFrxyMyEQ70g -fltoken=77b9908d91e7aa96c6bd6814 ");
+                    LaunchGame(ExchangeCode, GamePath, $"-epicapp=Fortnite -epicenv=Prod -EpicPortal -steamimportavailable -epicusername={Properties.Settings.Default.displayName} -epicuserid={Properties.Settings.Default.account_id} -epiclocale=en -epicsandboxid=fn -named_pipe={Properties.Settings.Default.account_id}\\Fortnite -fromfl=eaceos -caldera=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiMzBjMGFkOTcxMDU0NGNkZGIzMTQ3OTBiMjkyZGZkNWYiLCJnZW5lcmF0ZWQiOjE3NDMwMzQ4NjIsImNhbGRlcmFHdWlkIjoiMTFhYWMzZTItNGQ1Zi00ZjEwLWJjZmYtOTE3MTgwNjY0Yzk2IiwiYWNQcm92aWRlciI6IkVhc3lBbnRpQ2hlYXRFT1MiLCJub3RlcyI6IiIsInByZSI6dHJ1ZSwicGFlIjpmYWxzZSwiZmFsbGJhY2siOmZhbHNlfQ.zStgViVqciW5-U6-Lfagy5ViZ4f94pKu7V7OLf6hz_r368tIO4WZVLKo_IsqiA8BVnLViSQPf74UkiKML-4Gbg -startup=2e143277-9987-4091-a5fe-29fe40497e7c");
                 } else
                 {
                     LaunchGame(ExchangeCode, GamePath, "-epicapp=Fortnite -epicenv=Prod -EpicPortal -epiclocale=en -epicsandboxid=fn -nobe -fromfl=eac -caldera=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2lkIjoiUG9uZ28iLCJnZW5lcmF0ZWQiOjE3NDMwMTYyMDEsImNhbGRlcmFHVUlEIjoiY2JmMzUyYjctODI1NC00MWQ3LTliM2UtODZiMmE5NWZiMTUwIiwiYWNQcm92aWRlciI6IkVhc3lBbnRpQ2hlYXQiLCJub3RlcyI6IiIsInByZSI6ZmFsc2UsImZhbGxiYWNrIjpmYWxzZX0.ABumwBcUpw5jCEHz6m85XP3Df9CiXt2DVVh4Y0EVMKo -fltoken=77b9908d91e7aa96c6bd6814");
@@ -65,7 +66,7 @@ namespace Legacy_Launcher.LaunchService
             }
         }
 
-        public static void LaunchGame(string ExchangeCode, string GamePath, string Args) // args will change based on game version
+        public static void LaunchGame(string ExchangeCode, string GamePath, string Args)
         {
             if (File.Exists(Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteClient-Win64-Shipping.exe")))
             {
@@ -73,7 +74,7 @@ namespace Legacy_Launcher.LaunchService
                 {
                     StartInfo = new ProcessStartInfo()
                     {
-                        Arguments = $"-obfuscationid=PM3G4r-oF6DIG-fbJUON8rECU73FWA -AUTH_LOGIN=unused -AUTH_PASSWORD={ExchangeCode} AUTH_TYPE=exchangecode " + Args,
+                        Arguments = $"-obfuscationid=FkXUUTiM6yKaZo48nEKh6Vi4KpKMVQ -AUTH_LOGIN=unused -AUTH_PASSWORD={ExchangeCode} AUTH_TYPE=exchangecode " + Args,
                         FileName = Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteClient-Win64-Shipping.exe")
                     },
                     EnableRaisingEvents = true
@@ -84,7 +85,25 @@ namespace Legacy_Launcher.LaunchService
             }
         }
 
-        public static void LaunchEAC(string ExchangeCode, string GamePath, string Args) // args will change based on game version
+        public static void LaunchFortniteLauncher(string ExchangeCode, string GamePath, string Args)
+        {
+            if (File.Exists(Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteLauncher.exe")))
+            {
+                LaunchService.FNLauncherProcess = new Process()
+                {
+                    StartInfo = new ProcessStartInfo()
+                    {
+                        Arguments = $"-obfuscationid=FkXUUTiM6yKaZo48nEKh6Vi4KpKMVQ -AUTH_LOGIN=unused -AUTH_PASSWORD={ExchangeCode} AUTH_TYPE=exchangecode " + Args,
+                        FileName = Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteLauncher.exe")
+                    },
+                    EnableRaisingEvents = true
+                };
+                LaunchService.FNLauncherProcess.Start();
+                Utils.Logger.good("Successfully launched the fortnite launcher!");
+            }
+        }
+
+        public static void LaunchEAC(string ExchangeCode, string GamePath, string Args)
         {
             if (File.Exists(Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteClient-Win64-Shipping_EAC_EOS.exe")))
             {
@@ -92,7 +111,7 @@ namespace Legacy_Launcher.LaunchService
                 {
                     StartInfo = new ProcessStartInfo()
                     {
-                        Arguments = $"-AUTH_LOGIN=unused -AUTH_PASSWORD={ExchangeCode} AUTH_TYPE=exchangecode " + Args,
+                        Arguments = $"-obfuscationid=FkXUUTiM6yKaZo48nEKh6Vi4KpKMVQ -AUTH_LOGIN=unused -AUTH_PASSWORD={ExchangeCode} AUTH_TYPE=exchangecode " + Args,
                         FileName = Path.Combine(GamePath, "FortniteGame\\Binaries\\Win64\\", "FortniteClient-Win64-Shipping_EAC_EOS.exe")
                     },
                     EnableRaisingEvents = true

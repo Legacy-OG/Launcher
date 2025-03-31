@@ -179,6 +179,29 @@ namespace Legacy_Launcher
             }
         }
 
+        static async Task<bool> VerifyAccessToken()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string url = "https://account-public-service-prod.ol.epicgames.com/account/api/oauth/verify";
+
+                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {Properties.Settings.Default.access_token}");
+
+                HttpResponseMessage response = await client.GetAsync(url);
+                string responseString = await response.Content.ReadAsStringAsync();
+                JObject json = JObject.Parse(responseString);
+                if (json.ContainsKey("account_id"))
+                {
+                    Utils.Logger.good($"Successfully logged into {json["displayName"].ToString()}");
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         static async Task GetExchangeCode(string AccessToken)
         {
             using (HttpClient client = new HttpClient())
@@ -226,23 +249,27 @@ namespace Legacy_Launcher
                     Properties.Settings.Default.displayName = json["displayName"].ToString();
                     Properties.Settings.Default.account_id = json["account_id"].ToString();
                     Properties.Settings.Default.Save();
+
+                    Utils.Logger.good($"Successfully logged into {json["displayName"].ToString()}");
                 }
                 else
                 {
-                    Utils.Logger.warn("Could not get access token!");
-                    Utils.Logger.good("You will be redirected to the Epic Games website to login. After logging in please get the \"authorizationCode\".");
-                    Thread.Sleep(2000);
-                    Process.Start(new ProcessStartInfo("https://www.epicgames.com/id/api/redirect?clientId=ec684b8c687f479fadea3cb2ad83f5c6&responseType=code") { UseShellExecute = true });
-                    Console.Write("Please enter your authorization code: ");
-                    string AutorizationCode = Console.ReadLine();
-                    await GetAccessToken(AutorizationCode);
-                    string GamePath = await DetermineGamePath();
-                    await GetExchangeCode(Properties.Settings.Default.access_token);
-                    LaunchService.LaunchService.InitializeLaunching(Program.ExchangeCode, GamePath, 0);
-                    Environment.Exit(0);
+                    bool accessTokenActive = await VerifyAccessToken();
+                    if (accessTokenActive) {} else
+                    {
+                        Utils.Logger.warn("Could not get access token!");
+                        Utils.Logger.good("You will be redirected to the Epic Games website to login. After logging in please get the \"authorizationCode\".");
+                        Thread.Sleep(2000);
+                        Process.Start(new ProcessStartInfo("https://www.epicgames.com/id/api/redirect?clientId=ec684b8c687f479fadea3cb2ad83f5c6&responseType=code") { UseShellExecute = true });
+                        Console.Write("Please enter your authorization code: ");
+                        string AutorizationCode = Console.ReadLine();
+                        await GetAccessToken(AutorizationCode);
+                        string GamePath = await DetermineGamePath();
+                        await GetExchangeCode(Properties.Settings.Default.access_token);
+                        LaunchService.LaunchService.InitializeLaunching(Program.ExchangeCode, GamePath, 0);
+                        Environment.Exit(0);
+                    }
                 }
-
-                Utils.Logger.good($"Successfully logged into {json["displayName"].ToString()}");
             }
         }
     }

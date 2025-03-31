@@ -23,7 +23,7 @@ namespace Legacy_Launcher.LaunchService
         {
             try
             {
-                if (Properties.Settings.Default.Season <= 29)
+                if (Properties.Settings.Default.Season <= 29 && Properties.Settings.Default.Season >= 5)
                 {
                     File.Copy(
                         Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "GFSDK_Aftermath_Lib.x64.dll"),
@@ -82,6 +82,10 @@ namespace Legacy_Launcher.LaunchService
                 LaunchService.FortniteGame.Exited += new EventHandler(LaunchService.OnFortniteExit);
                 LaunchService.FortniteGame.Start();
                 Utils.Logger.good("Successfully launched the fortnite game client!");
+                if (Properties.Settings.Default.Season < 5)
+                {
+                    DllInjector.InjectDLL(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "GFSDK_Aftermath_Lib.x64.dll"), LaunchService.FortniteGame);
+                }
             }
         }
 
